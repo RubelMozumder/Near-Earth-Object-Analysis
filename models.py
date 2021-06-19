@@ -95,7 +95,7 @@ class CloseApproach:
         # onto attributes named `_designation`, `time`, `distance`, and `velocity`.
         # You should coerce these values to their appropriate data type and handle any edge cases.
         # The `cd_to_datetime` function will be useful.
-        self._designation = info['pdes']
+        self._designation = info['des']
         self.time = cd_to_datetime(info['cd']) if 'cd' in info else None  # TODO: Use the cd_to_datetime function for this attribute.
         self.distance = float(info['dist']) if 'dist' in info else 0.0
         self.velocity = float(info['v_rel']) if 'v_rel' in info else 0.0

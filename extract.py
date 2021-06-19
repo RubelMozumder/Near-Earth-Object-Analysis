@@ -26,13 +26,14 @@ def load_neos(neo_csv_path):
     """
     #TODO: Try to add the line search_neader_name outside of the load_neos()
     search_header_name= ['name', 'pdes', 'diameter', 'pha'] 
+    neo_infos=[] 
     with open(neo_csv_path,'r') as neocsv: 
         reader= csv.reader(neocsv) 
         header= np.array(next(reader)) 
         #header_name_index contains the corresponding index for name to search 
         header_name_index= [np.where(header==header_name)[0][0] for header_name in search_header_name] 
         # neo_infos is the list of arguments to used in the NearEarthObject class 
-        neo_infos=[] 
+        
         ii= 0 
         for data_line in iter(reader): 
             ii += 1 
@@ -58,7 +59,7 @@ def load_approaches(cad_json_path):
     search_fields_keys= ['des', 'cd', 'dist', 'v_rel']
     with open(cad_json_path,'r') as jfile:
         jfile_data = json.load(jfile)
-        fields_index = zip(jfile_data['fields'],range(len(jfile['fields'])))
+        fields_index = zip(jfile_data['fields'],range(len(jfile_data['fields'])))
         fields_index = [(key,index) for key, index in fields_index if key in search_fields_keys] 
 
         for cad_data in jfile_data['data']:

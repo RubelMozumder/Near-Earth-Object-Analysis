@@ -38,17 +38,23 @@ class NEODatabase:
         :param neos: A collection of `NearEarthObject`s.
         :param approaches: A collection of `CloseApproach`es.
         """
+        debug= False
         self._neos = neos
         self._approaches = approaches
 
         # TODO: What additional auxiliary data structures will be useful?
         self._pdes_to_neos= dict()
-        pdes_to_approaches= {approach._designation:approach for approach in self._approaches }
+        self._pdes_to_approaches= {approach._designation:approach for approach in self._approaches }
         self._neos_name_to_des= dict()
         
         for neo in self._neos:
             pdes= neo.designation
-            neo.approaches.append(pdes_to_approaches[pdes])
+            try:
+                neo.approaches.append(self._pdes_to_approaches[pdes])
+            except KeyError:
+                continue
+            if debug:
+                print(f'success pdes: {pdes}')
             self._pdes_to_neos[pdes]= neo
             if neo.name!= None:
                 self._neos_name_to_des[neo.name]=pdes
