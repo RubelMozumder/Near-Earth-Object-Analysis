@@ -14,6 +14,7 @@ You'll edit this file in Task 2.
 """
 import csv
 import json
+import numpy as np
 
 from models import NearEarthObject, CloseApproach
 
@@ -24,6 +25,26 @@ def load_neos(neo_csv_path):
     :param neo_csv_path: A path to a CSV file containing data about near-Earth objects.
     :return: A collection of `NearEarthObject`s.
     """
+
+    search_header_name= ['name', 'pdes', 'diameter', 'pha'] 
+    with open(PROJECT_ROOT/'neos.csv','r') as neocsv: 
+        reader= csv.reader(neocsv) 
+        header= np.array(next(reader)) 
+        #header_name_index contains the corresponding index for name to search 
+        header_name_index= [np.where(header==header_name)[0][0] for header_name in search_
+    header_name] 
+        # neo_infos is the list of arguments to used in the NearEarthObject class 
+        neo_infos=[] 
+        ii= 0 
+        for data_line in iter(reader): 
+            ii += 1 
+            neo_info= dict() 
+            for index in header_name_index: 
+                if data_line[index] == None or data_line[index] == '': 
+                    continue 
+                neo_info[header[index]]=data_line[index]  
+            neo_infos.append(neo_info) 
+
     # TODO: Load NEO data from the given CSV file.
     return ()
 
