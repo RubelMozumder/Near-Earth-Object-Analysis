@@ -18,7 +18,6 @@ import numpy as np
 
 from models import NearEarthObject, CloseApproach
 
-
 def load_neos(neo_csv_path):
     """Read near-Earth object information from a CSV file.
 
@@ -42,11 +41,10 @@ def load_neos(neo_csv_path):
                 if data_line[index] == None or data_line[index] == '': 
                     continue 
                 neo_info[header[index]]=data_line[index]  
-            neo_infos.append((neo_info, NearEarthObject(**neo_info))) 
+            neo_infos.append( NearEarthObject(**neo_info))
 
     # TODO: Load NEO data from the given CSV file.
-    return (neo_infos)
-
+    return neo_infos
 
 def load_approaches(cad_json_path):
     """Read close approach data from a JSON file.
@@ -64,12 +62,12 @@ def load_approaches(cad_json_path):
         fields_index = [(key,index) for key, index in fields_index if key in search_fields_keys] 
 
         for cad_data in jfile_data['data']:
-            cad_info= dic()
+            cad_info= dict()
             for key,index in fields_index:
                 cad_info[key] = cad_data[index]
-            cad_infos.append((cad_info, CloseApproach(**cad_info)))
+            cad_infos.append(CloseApproach(**cad_info))
 
-    return ()
+    return cad_infos
 
 
 

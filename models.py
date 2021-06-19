@@ -49,7 +49,8 @@ class NearEarthObject:
         self.hazardous = info.get('pha',False)
 
         # Create an empty initial collection of linked approaches.
-        self.approaches = [CloseApproach(**info).__repr__()]
+        self.approaches = []
+      #  self.approaches = [CloseApproach(**info).__repr__()]
 
     @property
     def fullname(self):
@@ -100,7 +101,7 @@ class CloseApproach:
         self.velocity = float(info['v_rel']) if 'v_rel' in info else 0.0
 
         # Create an attribute for the referenced NEO, originally None.
-        self.neo = self._designation
+        self.neo = None
 
     @property
     def time_str(self):
