@@ -43,22 +43,29 @@ class NEODatabase:
         self._approaches = approaches
 
         # TODO: What additional auxiliary data structures will be useful?
-        self._pdes_to_neos= dict()
-        self._pdes_to_approaches= {approach._designation:approach for approach in self._approaches }
-        self._neos_name_to_des= dict()
+        self._pdes_to_neos= {neo.designation: neo for neo in neos}
+        self._pdes_to_approaches= dict()
+        self._neos_name_to_pdes= dict()
         
-        for neo in self._neos:
-            pdes= neo.designation
+        for approach in self._approaches:
+            pdes= approach._designation
+            # To add the neo in the approach.neo list in model.py
             try:
-                neo.approaches.append(self._pdes_to_approaches[pdes])
+                approach.neo = self._pdes_to_neos[pdes]
             except KeyError:
+                print(f'No neo with the pdes {pdes} is found in the neos csv files')
                 continue
+
+            try:
+                self._pdes_to_neos[pdes].approaches.append(approach)
+            except KeyError:
+                print(f'No neo with the pdes {pdes} is found in the neos csv files')
+     
             if debug:
                 print(f'success pdes: {pdes}')
-            self._pdes_to_neos[pdes]= neo
-            if neo.name!= None:
-                self._neos_name_to_des[neo.name]=pdes
-
+            if self._pdes_to_neos[pdes].name!= None:
+                self._neos_name_to_pdes[self._pdes_to_neos[pdes].name]=pdes
+       
         # TODO: Link together the NEOs and their close approaches.
 
     def get_neo_by_designation(self, designation):
@@ -97,7 +104,7 @@ class NEODatabase:
         """
         # TODO: Fetch an NEO by its name.
         try:
-            pdes= self._neos_name_to_des[name]
+            pdes= self._neos_name_to_pdes[name]
             return self._pdes_to_neos[pdes]
         except:
             return None

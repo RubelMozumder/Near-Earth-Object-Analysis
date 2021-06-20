@@ -65,7 +65,10 @@ def load_approaches(cad_json_path):
         for cad_data in jfile_data['data']:
             cad_info= dict()
             for key,index in fields_index:
-                cad_info[key] = cad_data[index]
+                if cad_data[index] != '' or cad_data[index] != None:
+                    cad_info[key] = cad_data[index]
+                else: 
+                    continue
             cad_infos.append(CloseApproach(**cad_info))
 
     return cad_infos
