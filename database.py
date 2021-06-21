@@ -38,6 +38,8 @@ class NEODatabase:
         :param neos: A collection of `NearEarthObject`s.
         :param approaches: A collection of `CloseApproach`es.
         """
+        import numpy as np
+
         debug= False
         self._neos = neos
         self._approaches = approaches
@@ -46,7 +48,17 @@ class NEODatabase:
         self._pdes_to_neos= {neo.designation: neo for neo in neos}
         self._pdes_to_approaches= dict()
         self._neos_name_to_pdes= dict()
+
+        self._time_to_pdes= {approach.time : approach._designation for approach in self._approaches} 
+        self._distance_to_pdes= {approach.distance : approach._designation for approach in self._approaches}
+        self._velocity_to_pdes= {approach.velocity : approach._designation for approach in self._approaches}
+        self._diameter_to_pdes= {neo.diameter : neo.designation for neo in self._neos}
         
+        self._time_arr= np.array(self._time_to_pdes.keys())
+        self._distance_arr= np.array(self._distance_to_pdes.keys())
+        self._velocity_arr= np.array(self._velocity_to_pdes.keys())
+        self._diameter_arr= np.array(self._diameter_to_pdes.keys())
+
         for approach in self._approaches:
             pdes= approach._designation
             # To add the neo in the approach.neo list in model.py
@@ -109,8 +121,9 @@ class NEODatabase:
         except:
             return None
 
-    def query(self, filters=()):
-        """Query close approaches to generate those that match a collection of filters.
+    def query(self, filters):
+        """
+        Query close approaches to generate those that match a collection of filters.
 
         This generates a stream of `CloseApproach` objects that match all of the
         provided filters.
@@ -124,5 +137,25 @@ class NEODatabase:
         :return: A stream of matching `CloseApproach` objects.
         """
         # TODO: Generate `CloseApproach` objects that match all of the filters.
+        if len(filters) == 0:
+            for approach in self._approaches:
+                yield approach
+        
         for approach in self._approaches:
-            yield approach
+            filter_res= False
+            for filt in filters:
+                filter_res= filt.get(approach)
+                if filter_res:
+                    continue
+                else:
+                    break
+
+            if filter_res:
+                yield approach
+            else:
+                continue
+
+
+
+
+
