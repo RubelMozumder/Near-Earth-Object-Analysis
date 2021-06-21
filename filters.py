@@ -15,9 +15,11 @@ The `limit` function simply limits the maximum number of values produced by an
 iterator.
 
 You'll edit this file in Tasks 3a and 3c.
+
 """
 import operator
-
+import itertools
+import sys
 
 class UnsupportedCriterionError(NotImplementedError):
     """A filter criterion is unsupported."""
@@ -38,7 +40,7 @@ class AttributeFilter:
     Concrete subclasses can override the `get` classmethod to provide custom
     behavior to fetch a desired attribute from the given `CloseApproach`.
     """
-    def __init__(self, op, value):
+    def __init__(self, op, value, attr):
         """Construct a new `AttributeFilter` from an binary predicate and a reference value.
 
         The reference value will be supplied as the second (right-hand side)
@@ -51,13 +53,14 @@ class AttributeFilter:
         """
         self.op = op
         self.value = value
+        # attribute from the NearEarthObjects or CloseApproaches
+        self.attr = attr
 
     def __call__(self, approach):
         """Invoke `self(approach)`."""
         return self.op(self.get(approach), self.value)
 
-    @classmethod
-    def get(cls, approach):
+    def get(self, approach):
         """Get an attribute of interest from a close approach.
 
         Concrete subclasses must override this method to get an attribute of
@@ -66,7 +69,20 @@ class AttributeFilter:
         :param approach: A `CloseApproach` on which to evaluate this filter.
         :return: The value of an attribute of interest, comparable to `self.value` via `self.op`.
         """
-        raise UnsupportedCriterionError
+        try:
+            attribute = self.attr
+            if attribute == 'time':
+                return (approach.time.date())
+            elif attribute == 'diameter':
+                return approach.neo.diameter
+            elif attribute == 'hazardous':
+                return approach.neo.hazardous
+
+            else:
+                return getattr(approach, attribute)
+
+        except:
+            raise UnsupportedCriterionError
 
     def __repr__(self):
         return f"{self.__class__.__name__}(op=operator.{self.op.__name__}, value={self.value})"
@@ -106,8 +122,30 @@ def create_filters(date=None, start_date=None, end_date=None,
     :param hazardous: Whether the NEO of a matching `CloseApproach` is potentially hazardous.
     :return: A collection of filters for use with `query`.
     """
-    # TODO: Decide how you will represent your filters.
-    return ()
+    AttributeFilter_collection=[]
+    ## The 'attribute' from the attribute of NearEathObject, CloseApproaches
+    if date != None:
+        AttributeFilter_collection.append(AttributeFilter(operator.eq, date, attr='time'))
+    if start_date != None:
+        AttributeFilter_collection.append(AttributeFilter(operator.ge, start_date, attr='time'))
+    if end_date != None:
+        AttributeFilter_collection.append(AttributeFilter(operator.le, end_date, attr='time'))
+    if distance_min != None:
+        AttributeFilter_collection.append(AttributeFilter(operator.ge, distance_min, attr='distance'))
+    if distance_max != None:
+        AttributeFilter_collection.append(AttributeFilter(operator.le, distance_max, attr='distance'))
+    if velocity_min != None:
+        AttributeFilter_collection.append(AttributeFilter(operator.ge, velocity_min, attr='velocity'))
+    if velocity_max != None:
+        AttributeFilter_collection.append(AttributeFilter(operator.le, velocity_max, attr='velocity'))
+    if diameter_min != None:
+        AttributeFilter_collection.append(AttributeFilter(operator.ge, diameter_min, attr='diameter'))
+    if diameter_max != None:
+        AttributeFilter_collection.append(AttributeFilter(operator.le, diameter_max, attr='diameter'))
+    if hazardous != None:
+        AttributeFilter_collection.append(AttributeFilter(operator.eq, hazardous, attr='hazardous'))
+
+    return AttributeFilter_collection  
 
 
 def limit(iterator, n=None):
@@ -119,5 +157,12 @@ def limit(iterator, n=None):
     :param n: The maximum number of values to produce.
     :yield: The first (at most) `n` values from the iterator.
     """
-    # TODO: Produce at most `n` values from the given iterator.
-    return iterator
+    i= 0
+    if n==0 or n==None:
+        n= sys.maxsize
+    return itertools.islice(iterator, i, n) 
+
+
+
+
+
