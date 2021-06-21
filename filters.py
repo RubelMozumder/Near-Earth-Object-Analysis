@@ -60,8 +60,7 @@ class AttributeFilter:
         """Invoke `self(approach)`."""
         return self.op(self.get(approach), self.value)
 
-  #  @classmethod
-    def get(cls, approach):
+    def get(self, approach):
         """Get an attribute of interest from a close approach.
 
         Concrete subclasses must override this method to get an attribute of
@@ -71,7 +70,7 @@ class AttributeFilter:
         :return: The value of an attribute of interest, comparable to `self.value` via `self.op`.
         """
         try:
-            attribute = cls.attr
+            attribute = self.attr
             if attribute == 'time':
                 return (approach.time.date())
             elif attribute == 'diameter':
@@ -123,7 +122,6 @@ def create_filters(date=None, start_date=None, end_date=None,
     :param hazardous: Whether the NEO of a matching `CloseApproach` is potentially hazardous.
     :return: A collection of filters for use with `query`.
     """
-    # TODO: Decide how you will represent your filters.
     AttributeFilter_collection=[]
     ## The 'attribute' from the attribute of NearEathObject, CloseApproaches
     if date != None:
@@ -131,19 +129,19 @@ def create_filters(date=None, start_date=None, end_date=None,
     if start_date != None:
         AttributeFilter_collection.append(AttributeFilter(operator.ge, start_date, attr='time'))
     if end_date != None:
-        AttributeFilter_collection.append(AttributeFilter(operator.lt, end_date, attr='time'))
+        AttributeFilter_collection.append(AttributeFilter(operator.le, end_date, attr='time'))
     if distance_min != None:
         AttributeFilter_collection.append(AttributeFilter(operator.ge, distance_min, attr='distance'))
     if distance_max != None:
-        AttributeFilter_collection.append(AttributeFilter(operator.lt, distance_max, attr='distance'))
+        AttributeFilter_collection.append(AttributeFilter(operator.le, distance_max, attr='distance'))
     if velocity_min != None:
         AttributeFilter_collection.append(AttributeFilter(operator.ge, velocity_min, attr='velocity'))
     if velocity_max != None:
-        AttributeFilter_collection.append(AttributeFilter(operator.lt, velocity_min, attr='velocity'))
+        AttributeFilter_collection.append(AttributeFilter(operator.le, velocity_max, attr='velocity'))
     if diameter_min != None:
         AttributeFilter_collection.append(AttributeFilter(operator.ge, diameter_min, attr='diameter'))
     if diameter_max != None:
-        AttributeFilter_collection.append(AttributeFilter(operator.lt, diameter_max, attr='diameter'))
+        AttributeFilter_collection.append(AttributeFilter(operator.le, diameter_max, attr='diameter'))
     if hazardous != None:
         AttributeFilter_collection.append(AttributeFilter(operator.eq, hazardous, attr='hazardous'))
 
@@ -159,7 +157,6 @@ def limit(iterator, n=None):
     :param n: The maximum number of values to produce.
     :yield: The first (at most) `n` values from the iterator.
     """
-    # TODO: Produce at most `n` values from the given iterator.
     i= 0
     if n==0 or n==None:
         n= sys.maxsize

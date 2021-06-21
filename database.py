@@ -44,7 +44,6 @@ class NEODatabase:
         self._neos = neos
         self._approaches = approaches
 
-        # TODO: What additional auxiliary data structures will be useful?
         self._pdes_to_neos= {neo.designation: neo for neo in neos}
         self._pdes_to_approaches= dict()
         self._neos_name_to_pdes= dict()
@@ -78,8 +77,6 @@ class NEODatabase:
             if self._pdes_to_neos[pdes].name!= None:
                 self._neos_name_to_pdes[self._pdes_to_neos[pdes].name]=pdes
        
-        # TODO: Link together the NEOs and their close approaches.
-
     def get_neo_by_designation(self, designation):
         """Find and return an NEO by its primary designation.
 
@@ -93,7 +90,6 @@ class NEODatabase:
         :param designation: The primary designation of the NEO to search for.
         :return: The `NearEarthObject` with the desired primary designation, or `None`.
         """
-        # TODO: Fetch an NEO by its primary designation.
         try:
             neo= self._pdes_to_neos[designation]
             return neo
@@ -114,7 +110,6 @@ class NEODatabase:
         :param name: The name, as a string, of the NEO to search for.
         :return: The `NearEarthObject` with the desired name, or `None`.
         """
-        # TODO: Fetch an NEO by its name.
         try:
             pdes= self._neos_name_to_pdes[name]
             return self._pdes_to_neos[pdes]
@@ -136,24 +131,23 @@ class NEODatabase:
         :param filters: A collection of filters capturing user-specified criteria.
         :return: A stream of matching `CloseApproach` objects.
         """
-        # TODO: Generate `CloseApproach` objects that match all of the filters.
         if len(filters) == 0:
             for approach in self._approaches:
                 yield approach
-        
-        for approach in self._approaches:
-            filter_res= False
-            for filt in filters:
-                filter_res= filt.get(approach)
-                if filter_res:
-                    continue
-                else:
-                    break
+        else: 
+            for approach in self._approaches:
+                filter_res= False
+                for filt in filters:
+                    filter_res= filt(approach)
+                    if filter_res:
+                        continue
+                    else:
+                        break
 
-            if filter_res:
-                yield approach
-            else:
-                continue
+                if filter_res:
+                    yield approach
+                else:
+                    continue
 
 
 
