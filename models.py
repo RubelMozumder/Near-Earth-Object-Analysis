@@ -19,6 +19,7 @@ You'll edit this file in Task 1.
 """
 from helpers import cd_to_datetime, datetime_to_str
 
+
 class NearEarthObject:
     """A near-Earth object (NEO).
 
@@ -31,7 +32,6 @@ class NearEarthObject:
     initialized to an empty collection, but eventually populated in the
     `NEODatabase` constructor.
     """
-    # TODO: How can you, and should you, change the arguments to this constructor?
     # If you make changes, be sure to update the comments in this file.
     def __init__(self, **info):
         """Create a new `NearEarthObject`.
@@ -44,12 +44,15 @@ class NearEarthObject:
         # handle any edge cases, such as a empty name being represented by `None`
         # and a missing diameter being represented by `float('nan')`.
         self.designation = str(info['pdes'])
-        self.name = info.get('name',None)
+        self.name = info['name'] if ('name' in info) else None
         self.diameter = float(info['diameter']) if ('diameter' in info) else float('nan')
-        self.hazardous = info.get('hazardous',False)
+        
+        hazad = info.get('pha','')
+        self.hazardous= True if hazad=='Y' else False
 
         # Create an empty initial collection of linked approaches.
-        self.approaches = [CloseApproach(**info).__repr__()]
+        self.approaches = []
+      #  self.approaches = [CloseApproach(**info).__repr__()]
 
     @property
     def fullname(self):
@@ -93,13 +96,13 @@ class CloseApproach:
         # onto attributes named `_designation`, `time`, `distance`, and `velocity`.
         # You should coerce these values to their appropriate data type and handle any edge cases.
         # The `cd_to_datetime` function will be useful.
-        self._designation = info['pdes']
-        self.time = cd_to_datetime(info['time']) if 'time' in info else None  # TODO: Use the cd_to_datetime function for this attribute.
-        self.distance = float(info['distance']) if 'distance' in info else 0.0
-        self.velocity = float(info['velocity']) if 'velocity' in info else 0.0
+        self._designation = info['des']
+        self.time = cd_to_datetime(info['cd']) if 'cd' in info else None  # TODO: Use the cd_to_datetime function for this attribute.
+        self.distance = float(info['dist']) if 'dist' in info else 0.0
+        self.velocity = float(info['v_rel']) if 'v_rel' in info else 0.0
 
         # Create an attribute for the referenced NEO, originally None.
-        self.neo = self._designation
+        self.neo = None
 
     @property
     def time_str(self):
