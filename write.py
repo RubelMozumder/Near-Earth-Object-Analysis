@@ -30,7 +30,9 @@ def write_to_csv(results, filename):
         f = csv.writer(csvfile)
         f.writerow(fieldnames)
         for res in results:
-            data_row= (res.time, res.distance, res.velocity, res._designation, res.neo.name if res.neo.name!=None else '', res.neo.diameter, res.neo.hazardous)
+            data_row= (res.time, res.distance, res.velocity, res._designation, 
+                       res.neo.name if res.neo.name!=None else '', res.neo.diameter, 
+                       res.neo.hazardous)
             f.writerow(data_row)
         csvfile.close()    
 
