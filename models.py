@@ -56,11 +56,16 @@ class NearEarthObject:
 
     @property
     def fullname(self):
-        """Return a representation of the full name of this NEO."""
+        """Full name of NEO.
+
+        Return a representation of the full name of this NEO.
+        """
         return f'{self.designation} {self.name}'
 
     def __str__(self):
-        """Return `str(self)`."""
+        """Return `str(self)`.
+
+        """
         if self.hazardous:
             hazardous = ' '
         else:
@@ -77,8 +82,11 @@ class NearEarthObject:
 
     def __repr__(self):
         """Print option.
+        
         Return `repr(self)`, a computer-readable
-        string representation of this object."""
+        string representation of this object.
+
+        """
         return (f"NearEarthObject(designation={self.designation!r}," 
                 f"name={self.name!r}, diameter={self.diameter:.3f},"
                 f"hazardous={self.hazardous!r})")
@@ -130,7 +138,9 @@ class CloseApproach:
             return None
 
     def __str__(self):
-        """Return `str(self)`."""
+        """Return `str(self)`.
+        Represent the str.
+        """
         return (f"A CloseApproach with primary designation "
                f"{self._designation}, on {self.time_str}," 
                f"is at closest distance {self.distance} au."
