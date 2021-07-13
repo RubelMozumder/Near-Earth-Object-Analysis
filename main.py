@@ -1,38 +1,27 @@
 #!/usr/bin/env python3
 """Explore a dataset of near-Earth objects and their close approaches to Earth.
-
 See `README.md` for a detailed discussion of this project.
-
 This script can be invoked from the command line::
-
     $ python3 main.py {inspect,query,interactive} [args]
-
 The `inspect` subcommand looks up an NEO by name or by primary designation, and
 optionally lists all of that NEO's known close approaches:
-
     $ python3 main.py inspect --pdes 1P
     $ python3 main.py inspect --name Halley
     $ python3 main.py inspect --verbose --name Halley
-
 The `query` subcommand searches for close approaches that match given criteria:
-
     $ python3 main.py query --date 1969-07-29
     $ python3 main.py query --start-date 2020-01-01 --end-date 2020-01-31 --max-distance 0.025
     $ python3 main.py query --start-date 2050-01-01 --min-distance 0.2 --min-velocity 50
     $ python3 main.py query --date 2020-03-14 --max-velocity 25 --min-diameter 0.5 --hazardous
     $ python3 main.py query --start-date 2000-01-01 --max-diameter 0.1 --not-hazardous
     $ python3 main.py query --hazardous --max-distance 0.05 --min-velocity 30
-
 The set of results can be limited in size and/or saved to an output file in CSV
 or JSON format:
-
     $ python3 main.py query --limit 5 --outfile results.csv
     $ python3 main.py query --limit 15 --outfile results.json
-
 The `interactive` subcommand loads the NEO database and spawns an interactive
 command shell that can repeatedly execute `inspect` and `query` commands without
 having to wait to reload the database each time. However, it doesn't hot-reload.
-
 If needed, the script can load data from data files other than the default with
 `--neofile` or `--cadfile`.
 """
@@ -59,10 +48,8 @@ _START = time.time()
 
 def date_fromisoformat(date_string):
     """Return a `datetime.date` corresponding to a string in YYYY-MM-DD format.
-
     In Python 3.7+, there is `datetime.date.fromisoformat`, but alas - we're
     supporting Python 3.6+.
-
     :param date_string: A date in the format YYYY-MM-DD.
     :return: A `datetime.date` correspondingo the given date string.
     """
@@ -75,7 +62,6 @@ def date_fromisoformat(date_string):
 def make_parser():
     """
     Create an ArgumentParser for this script.
-
     :return: A tuple of the top-level, inspect, and query parsers.
     
    
@@ -163,15 +149,12 @@ def make_parser():
 
 def inspect(database, pdes=None, name=None, verbose=False):
     """Perform the `inspect` subcommand.
-
     This function fetches an NEO by designation or by name. If a matching NEO is
     found, information about the NEO is printed (additionally, information for
     all of the NEO's known close approaches is printed if `verbose=True`).
     Otherwise, a message is printed noting that there are no matching NEOs.
-
     At least one of `pdes` and `name` must be given. If both are given, prefer
     to look up the NEO by the primary designation.
-
     :param database: The `NEODatabase` containing data on NEOs and their close approaches.
     :param pdes: The primary designation of an NEO for which to search.
     :param name: The name of an NEO for which to search.
@@ -199,15 +182,12 @@ def inspect(database, pdes=None, name=None, verbose=False):
 
 def query(database, args):
     """Perform the `query` subcommand.
-
     Create a collection of filters with `create_filters` and supply them to the
     database's `query` method to produce a stream of matching results.
-
     If an output file wasn't given, print these results to stdout, limiting to
     10 entries if no limit was specified. If an output file was given, use the
     file's extension to infer whether the file should hold CSV or JSON data, and
     then write the results to the output file in that format.
-
     :param database: The `NEODatabase` containing data on NEOs and their close approaches.
     :param args: All arguments from the command line, as parsed by the top-level parser.
     """
@@ -238,12 +218,9 @@ def query(database, args):
 
 class NEOShell(cmd.Cmd):
     """Perform the `interactive` subcommand.
-
     This is a `cmd.Cmd` shell - a specialized tool for command-based REPL sessions.
-
     It wraps the `inspect` and `query` parsers to parse flags for those commands
     as if they were supplied at the command line.
-
     The primary purpose of this shell is to allow users to repeatedly perform
     inspect and query commands, while only loading the data (which can be quite
     slow) once.
@@ -254,9 +231,7 @@ class NEOShell(cmd.Cmd):
 
     def __init__(self, database, inspect_parser, query_parser, aggressive=False, **kwargs):
         """Create a new `NEOShell`.
-
         Creating this object doesn't start the session - for that, use `.cmdloop()`.
-
         :param database: The `NEODatabase` containing data on NEOs and their close approaches.
         :param inspect_parser: The subparser for the `inspect` subcommand.
         :param query_parser: The subparser for the `query` subcommand.
@@ -272,10 +247,8 @@ class NEOShell(cmd.Cmd):
     @classmethod
     def parse_arg_with(cls, arg, parser):
         """Parse the additional text passed to a command, using a given parser.
-
         If any error is encountered (in lexical parsing or argument parsing),
         print the error to stderr and return None.
-
         :param arg: The additional text supplied after the command.
         :param parser: An `argparse.ArgumentParser` to parse the arguments.
         :return: A `Namespace` of the arguments (produced by `parse_args`) or None.
@@ -302,14 +275,10 @@ class NEOShell(cmd.Cmd):
 
     def do_inspect(self, arg):
         """Perform the `inspect` subcommand within the REPL session.
-
         Inspect an NEO by designation or by name:
-
             (neo) inspect --pdes 1P
             (neo) inspect --name Halley
-
         Additionally, list all known close approaches:
-
             (neo) inspect --verbose --name Eros
         """
         args = self.parse_arg_with(arg, self.inspect)
@@ -327,23 +296,16 @@ class NEOShell(cmd.Cmd):
 
     def do_query(self, arg):
         """Perform the `query` subcommand within the REPL session.
-
         This command behaves the same as the `query` subcommand from the command
         line. For example, to query close approaches on January 1st, 2020:
-
             (neo) query --date 2020-01-01
-
         You can use any of the other filters: `--start-date`, `--end-date`,
         `--min-distance`, `--max-distance`, `--min-velocity`, `--max-velocity`,
         `--min-diameter`, `--max-diameter`, `--hazardous`, `--not-hazardous`.
-
         The number of results shown can be limited to a maximum number with `--limit`:
-
             (neo) query --limit 2
-
         The results can be saved to a file (instead of displayed to stdout) with
         `--outfile`:
-
             (neo) query --limit 5 --outfile results.csv
             (neo) query --limit 5 --outfile results.json
         """

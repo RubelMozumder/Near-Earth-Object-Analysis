@@ -26,8 +26,8 @@ class NearEarthObject:
     """A near-Earth object (NEO).
 
     An NEO encapsulates semantic and physical parameters about the object, such
-    as its primary designation (required, unique), IAU name (optional), 
-    diameter in kilometers (optional - sometimes unknown), and whether 
+    as its primary designation (required, unique), IAU name (optional),
+    diameter in kilometers (optional - sometimes unknown), and whether
     it's marked as potentially hazardous to Earth.
 
     A `NearEarthObject` also maintains a collection of its close approaches -
@@ -48,9 +48,9 @@ class NearEarthObject:
             self.diameter = float(info['diameter'])
         else:
             self.diameter = float('nan')
-        
+
         hazad = info.get('pha', '')
-        self.hazardous= True if hazad == 'Y' else False
+        self.hazardous = True if hazad == 'Y' else False
 
         self.approaches = []
 
@@ -65,6 +65,7 @@ class NearEarthObject:
     def __str__(self):
         """Return `str(self)`.
 
+        To print the NEO info.
         """
         if self.hazardous:
             hazardous = ' '
@@ -76,20 +77,21 @@ class NearEarthObject:
         else:
             diameter = 'NOT FOUND'
         return (f"A NearEarthObject with primary designation :"
-               f"{self.designation}, name: {self.name} has a"
-               f"diameter of {diameter} and is{hazardous}"
-               f"potentialy hazardous.")
+                f"{self.designation}, name: {self.name} has a"
+                f"diameter of {diameter} and is{hazardous}"
+                f"potentialy hazardous.")
 
     def __repr__(self):
         """Print option.
-        
+
         Return `repr(self)`, a computer-readable
         string representation of this object.
 
         """
-        return (f"NearEarthObject(designation={self.designation!r}," 
+        return (f"NearEarthObject(designation={self.designation!r},"
                 f"name={self.name!r}, diameter={self.diameter:.3f},"
                 f"hazardous={self.hazardous!r})")
+
 
 class CloseApproach:
     """A close approach to Earth by an NEO.
@@ -99,9 +101,9 @@ class CloseApproach:
     approach, the nominal approach distance in astronomical units,
     and the relative approach velocity in kilometers per second.
 
-    A `CloseApproach` also maintains a reference to its 
-    `NearEarthObject` - initally, this information (the NEO's 
-    primary designation) is saved in a private attribute, but the 
+    A `CloseApproach` also maintains a reference to its
+    `NearEarthObject` - initally, this information (the NEO's
+    primary designation) is saved in a private attribute, but the
     referenced NEO is eventually replaced in the`NEODatabase` constructor.
     """
 
@@ -132,25 +134,27 @@ class CloseApproach:
         to a formatted string that can be used in human-readable
         representations and in serialization to CSV and JSON files.
         """
-        if self.time is not None: 
+        if self.time is not None:
             return datetime_to_str(self.time)
         else:
             return None
 
     def __str__(self):
         """Return `str(self)`.
+
         Represent the str.
         """
         return (f"A CloseApproach with primary designation "
-               f"{self._designation}, on {self.time_str}," 
-               f"is at closest distance {self.distance} au."
-               f"and having the velosity {self.velocity}")
+                f"{self._designation}, on {self.time_str},"
+                f"is at closest distance {self.distance} au."
+                f"and having the velosity {self.velocity}")
 
     def __repr__(self):
-        """Computer Readable str.
+        """Return Computer Readable str.
 
-        Return `repr(self)`, a computer-readable string 
-        representation of this object."""
+        Return `repr(self)`, a computer-readable string
+        representation of this object.
+        """
         return (f"CloseApproach(time={self.time_str!r}, i"
                 f"distance={self.distance:.2f}, "
                 f"velocity={self.velocity:.2f}, neo={self.neo!r})")
