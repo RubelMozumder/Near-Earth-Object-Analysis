@@ -1,0 +1,125 @@
+$ python3 -m unittest
+
+
+.........................................................................
+----------------------------------------------------------------------
+Ran 73 tests in 3.191s
+
+OK
+
+$ python3 -m unittest tests.test_query tests.test_limit
+
+.....................................
+----------------------------------------------------------------------
+Ran 37 tests in 0.272s
+
+OK
+
+$python3 main.py query --date 2020-01-01
+
+A CloseApproach with primary designation 2020 AY1, on 2020-01-01 00:54, is at closest distance 0.0211660525256395 au. and having the velosity 5.62203195551878
+A CloseApproach with primary designation 2019 YK, on 2020-01-01 02:06, is at closest distance 0.0361009669651545 au. and having the velosity 7.35926323695148
+A CloseApproach with primary designation 2013 EC20, on 2020-01-01 03:31, is at closest distance 0.162008280404152 au. and having the velosity 2.79339217149069
+A CloseApproach with primary designation 2020 AM1, on 2020-01-01 07:18, is at closest distance 0.159657027754696 au. and having the velosity 4.15293831675084
+A CloseApproach with primary designation 2016 EF195, on 2020-01-01 08:44, is at closest distance 0.276326257736385 au. and having the velosity 17.5484457306842
+A CloseApproach with primary designation 2020 AP3, on 2020-01-01 11:13, is at closest distance 0.016740489928579 au. and having the velosity 5.19125156562752
+A CloseApproach with primary designation 2011 YE40, on 2020-01-01 14:36, is at closest distance 0.0643318775843554 au. and having the velosity 12.790446366754
+A CloseApproach with primary designation 2019 WE5, on 2020-01-01 14:55, is at closest distance 0.134597422722518 au. and having the velosity 5.0028249278882
+A CloseApproach with primary designation 2020 AE2, on 2020-01-01 15:16, is at closest distance 0.237147202802357 au. and having the velosity 13.298797436931
+A CloseApproach with primary designation 2020 JU, on 2020-01-01 21:01, is at closest distance 0.131087507929499 au. and having the velosity 6.64552237328032
+
+$python3 main.py query --start-date 2020-01-01 --end-date 2020-12-31
+
+A CloseApproach with primary designation 2020 AY1, on 2020-01-01 00:54, is at closest distance 0.0211660525256395 au. and having the velosity 5.62203195551878
+A CloseApproach with primary designation 2019 YK, on 2020-01-01 02:06, is at closest distance 0.0361009669651545 au. and having the velosity 7.35926323695148
+A CloseApproach with primary designation 2013 EC20, on 2020-01-01 03:31, is at closest distance 0.162008280404152 au. and having the velosity 2.79339217149069
+A CloseApproach with primary designation 2020 AM1, on 2020-01-01 07:18, is at closest distance 0.159657027754696 au. and having the velosity 4.15293831675084
+A CloseApproach with primary designation 2016 EF195, on 2020-01-01 08:44, is at closest distance 0.276326257736385 au. and having the velosity 17.5484457306842
+A CloseApproach with primary designation 2020 AP3, on 2020-01-01 11:13, is at closest distance 0.016740489928579 au. and having the velosity 5.19125156562752
+A CloseApproach with primary designation 2011 YE40, on 2020-01-01 14:36, is at closest distance 0.0643318775843554 au. and having the velosity 12.790446366754
+A CloseApproach with primary designation 2019 WE5, on 2020-01-01 14:55, is at closest distance 0.134597422722518 au. and having the velosity 5.0028249278882
+A CloseApproach with primary designation 2020 AE2, on 2020-01-01 15:16, is at closest distance 0.237147202802357 au. and having the velosity 13.298797436931
+A CloseApproach with primary designation 2020 JU, on 2020-01-01 21:01, is at closest distance 0.131087507929499 au. and having the velosity 6.64552237328032
+
+$python3 main.py query --start-date 2020-01-01 --end-date 2020-12-31 --max-distance 0.1
+
+A CloseApproach with primary designation 2020 AY1, on 2020-01-01 00:54, is at closest distance 0.0211660525256395 au. and having the velosity 5.62203195551878
+A CloseApproach with primary designation 2019 YK, on 2020-01-01 02:06, is at closest distance 0.0361009669651545 au. and having the velosity 7.35926323695148
+A CloseApproach with primary designation 2020 AP3, on 2020-01-01 11:13, is at closest distance 0.016740489928579 au. and having the velosity 5.19125156562752
+A CloseApproach with primary designation 2011 YE40, on 2020-01-01 14:36, is at closest distance 0.0643318775843554 au. and having the velosity 12.790446366754
+A CloseApproach with primary designation 2020 AN2, on 2020-01-01 21:18, is at closest distance 0.020214316165424 au. and having the velosity 15.352815636266
+A CloseApproach with primary designation 2020 AX, on 2020-01-01 22:49, is at closest distance 0.0496561819852301 au. and having the velosity 7.31673540668655
+A CloseApproach with primary designation 2020 AC, on 2020-01-02 06:56, is at closest distance 0.0086567240263386 au. and having the velosity 5.79319914432443
+A CloseApproach with primary designation 2019 YL6, on 2020-01-02 07:47, is at closest distance 0.0510719338574496 au. and having the velosity 4.80402694542296
+A CloseApproach with primary designation 2011 YP10, on 2020-01-02 08:37, is at closest distance 0.0706734104493936 au. and having the velosity 5.68158527665921
+A CloseApproach with primary designation 2020 AD, on 2020-01-02 09:12, is at closest distance 0.00598231592486201 au. and having the velosity 15.6228249367712
+
+$python3 main.py query --start-date 2020-01-01 --end-date 2020-12-31 --min-distance 0.3
+
+A CloseApproach with primary designation 2019 YO6, on 2020-01-02 10:02, is at closest distance 0.313066757159819 au. and having the velosity 7.21738497805073
+A CloseApproach with primary designation 2012 DN31, on 2020-01-02 13:13, is at closest distance 0.455430705067515 au. and having the velosity 21.6163263712197
+A CloseApproach with primary designation 2016 TR55, on 2020-01-02 15:10, is at closest distance 0.451354669610327 au. and having the velosity 6.83514962365473
+A CloseApproach with primary designation 2015 XZ168, on 2020-01-02 17:58, is at closest distance 0.452434920170947 au. and having the velosity 9.06684658703609
+A CloseApproach with primary designation 2020 KS2, on 2020-01-02 19:00, is at closest distance 0.427162060035349 au. and having the velosity 19.1821727778875
+A CloseApproach with primary designation 2019 YN4, on 2020-01-03 00:06, is at closest distance 0.358930603307994 au. and having the velosity 11.1775831061319
+A CloseApproach with primary designation 2014 OY337, on 2020-01-03 06:48, is at closest distance 0.483265576664283 au. and having the velosity 11.6155274946114
+A CloseApproach with primary designation 2013 AB32, on 2020-01-03 07:27, is at closest distance 0.333791688556994 au. and having the velosity 20.3921514638443
+A CloseApproach with primary designation 2020 BD8, on 2020-01-03 09:11, is at closest distance 0.371331134563953 au. and having the velosity 28.3289968242642
+A CloseApproach with primary designation 2018 AU11, on 2020-01-03 09:14, is at closest distance 0.367630056554612 au. and having the velosity 23.381058527221
+
+$ python3 main.py query --start-date 2020-01-01 --end-date 2020-12-31 --max-velocity 50
+
+A CloseApproach with primary designation 2020 AY1, on 2020-01-01 00:54, is at closest distance 0.0211660525256395 au. and having the velosity 5.62203195551878
+A CloseApproach with primary designation 2019 YK, on 2020-01-01 02:06, is at closest distance 0.0361009669651545 au. and having the velosity 7.35926323695148
+A CloseApproach with primary designation 2013 EC20, on 2020-01-01 03:31, is at closest distance 0.162008280404152 au. and having the velosity 2.79339217149069
+A CloseApproach with primary designation 2020 AM1, on 2020-01-01 07:18, is at closest distance 0.159657027754696 au. and having the velosity 4.15293831675084
+A CloseApproach with primary designation 2016 EF195, on 2020-01-01 08:44, is at closest distance 0.276326257736385 au. and having the velosity 17.5484457306842
+A CloseApproach with primary designation 2020 AP3, on 2020-01-01 11:13, is at closest distance 0.016740489928579 au. and having the velosity 5.19125156562752
+A CloseApproach with primary designation 2011 YE40, on 2020-01-01 14:36, is at closest distance 0.0643318775843554 au. and having the velosity 12.790446366754
+A CloseApproach with primary designation 2019 WE5, on 2020-01-01 14:55, is at closest distance 0.134597422722518 au. and having the velosity 5.0028249278882
+A CloseApproach with primary designation 2020 AE2, on 2020-01-01 15:16, is at closest distance 0.237147202802357 au. and having the velosity 13.298797436931
+A CloseApproach with primary designation 2020 JU, on 2020-01-01 21:01, is at closest distance 0.131087507929499 au. and having the velosity 6.64552237328032
+
+$ python3 main.py query --start-date 2020-01-01 --end-date 2020-12-31 --min-velocity 25
+
+A CloseApproach with primary designation 506491, on 2020-01-02 09:35, is at closest distance 0.252796953805701 au. and having the velosity 37.6220787454813
+A CloseApproach with primary designation 2015 XQ55, on 2020-01-03 02:49, is at closest distance 0.293546981835865 au. and having the velosity 25.4246612165207
+A CloseApproach with primary designation 2020 BD8, on 2020-01-03 09:11, is at closest distance 0.371331134563953 au. and having the velosity 28.3289968242642
+A CloseApproach with primary designation 2020 BU13, on 2020-01-05 04:03, is at closest distance 0.179592729655368 au. and having the velosity 38.2146356860602
+A CloseApproach with primary designation 2012 BU61, on 2020-01-05 11:14, is at closest distance 0.0999383220902655 au. and having the velosity 26.1889864360429
+A CloseApproach with primary designation 2015 FE37, on 2020-01-06 05:49, is at closest distance 0.334184172207573 au. and having the velosity 25.9761629819167
+A CloseApproach with primary designation 2019 WH6, on 2020-01-07 14:26, is at closest distance 0.218033555418336 au. and having the velosity 32.2682535309333
+A CloseApproach with primary designation 512244, on 2020-01-07 20:08, is at closest distance 0.431945238524114 au. and having the velosity 34.7839664275646
+A CloseApproach with primary designation 281365, on 2020-01-07 22:04, is at closest distance 0.448555132652792 au. and having the velosity 30.5425492481524
+A CloseApproach with primary designation 417871, on 2020-01-08 22:21, is at closest distance 0.406241767308905 au. and having the velosity 25.5215078985051
+
+$ python3 main.py query --min-diameter 0.5 --max-diameter 0.6 --not-hazardous
+
+A CloseApproach with primary designation 22099, on 1900-01-23 13:01, is at closest distance 0.4069274275736 au. and having the velosity 9.61198163278794
+A CloseApproach with primary designation 252558, on 1900-02-10 08:36, is at closest distance 0.28310925111954 au. and having the velosity 20.4276861099073
+A CloseApproach with primary designation 85953, on 1900-03-25 17:58, is at closest distance 0.409923926208573 au. and having the velosity 33.8237700298612
+A CloseApproach with primary designation 276703, on 1900-04-05 01:19, is at closest distance 0.17980141047048 au. and having the velosity 22.2484086539352
+A CloseApproach with primary designation 137099, on 1900-04-30 08:16, is at closest distance 0.441277655721178 au. and having the velosity 21.2789631866915
+A CloseApproach with primary designation 87309, on 1900-07-04 09:43, is at closest distance 0.247771907671961 au. and having the velosity 19.3846513600194
+A CloseApproach with primary designation 159454, on 1900-08-12 21:11, is at closest distance 0.478768968646729 au. and having the velosity 24.4838883356161
+A CloseApproach with primary designation 2010 OQ1, on 1900-08-24 16:36, is at closest distance 0.376792760532517 au. and having the velosity 19.047785207128
+A CloseApproach with primary designation 2010 KK127, on 1900-09-27 08:16, is at closest distance 0.457496567134431 au. and having the velosity 3.57318075499507
+A CloseApproach with primary designation 22099, on 1900-11-23 11:03, is at closest distance 0.363111505548476 au. and having the velosity 18.2398949290198
+
+$ python3 main.py query --max-distance 0.1 --min-velocity 35 --min-diameter 2.5 --hazardous
+
+A CloseApproach with primary designation 3200, on 2050-12-11 19:44, is at closest distance 0.0825748603376914 au. and having the velosity 36.2360242868312
+
+$ python3 main.py inspect --verbose --name Ganymed
+
+A NearEarthObject with primary designation :1036, name: Ganymed has a diameter of 37.675 and is not potentialy hazardous.
+- A CloseApproach with primary designation 1036, on 1911-10-15 19:16, is at closest distance 0.381362839855777 au. and having the velosity 17.0936978226911
+- A CloseApproach with primary designation 1036, on 1924-10-17 00:51, is at closest distance 0.496274614603618 au. and having the velosity 19.3628654227641
+- A CloseApproach with primary designation 1036, on 1998-10-14 05:12, is at closest distance 0.464262946654528 au. and having the velosity 13.6399792167938
+- A CloseApproach with primary designation 1036, on 2011-10-13 00:04, is at closest distance 0.359104318674552 au. and having the velosity 14.304703704289
+- A CloseApproach with primary designation 1036, on 2024-10-13 01:56, is at closest distance 0.37409718734356 au. and having the velosity 16.3343740524295
+- A CloseApproach with primary designation 1036, on 2037-10-15 18:31, is at closest distance 0.466187644979184 au. and having the velosity 18.6810529423632
+
+$ python3 main.py inspect --name Halley
+
+A NearEarthObject with primary designation :1P, name: Halley has a diameter of 11.0 and is not potentialy hazardous.
